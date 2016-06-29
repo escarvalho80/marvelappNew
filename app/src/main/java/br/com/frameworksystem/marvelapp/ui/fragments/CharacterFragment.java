@@ -1,0 +1,52 @@
+package br.com.frameworksystem.marvelapp.ui.fragments;
+
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import br.com.frameworksystem.marvelapp.Mock;
+import br.com.frameworksystem.marvelapp.R;
+import br.com.frameworksystem.marvelapp.ui.adapter.CharacterAdapter;
+
+/**
+ * Created by User on 23/06/2016.
+ */
+public class CharacterFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    private CharacterAdapter characterAdapter;
+
+    public static Fragment newInstancia() {
+
+        return new CharacterFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.fragment);
+        recyclerView.setLayoutManager(layoutManager);
+
+        characterAdapter = new CharacterAdapter(getActivity(), Mock.getCharacters(), recyclerView);
+        recyclerView.setAdapter(characterAdapter);
+    }
+
+}
