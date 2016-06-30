@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity
             fragment = CharacterFragment.newInstancia();
         } else if (id == R.id.nav_evento) {
             fragment = EventFragments.newInstancia();
+        } else if (id == R.id.nav_comic){
+            fragment = EventFragments.newInstancia();
         }
 
         if (fragment != null){
