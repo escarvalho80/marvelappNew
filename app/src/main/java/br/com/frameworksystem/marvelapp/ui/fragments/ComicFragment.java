@@ -14,15 +14,19 @@ import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.ui.adapter.ComicAdapter;
 
 /**
- * Created by User on 29/06/2016.
+ * Created by fo050220 on 30/06/2016.
  */
-public class ComicFragment extends Fragment{
+public class ComicFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ComicAdapter comicAdapter;
+    private String nameComic;
 
-    public static Fragment newInstancia(){
-        return new ComicFragment();
+    public static ComicFragment newInstancia(String nameComic) {
+        ComicFragment comicFragment = new ComicFragment();
+        comicFragment.nameComic = nameComic;
+
+        return comicFragment;
     }
 
     @Nullable
@@ -42,6 +46,8 @@ public class ComicFragment extends Fragment{
         recyclerView = (RecyclerView) view.findViewById(R.id.fragment);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        comicAdapter = new ComicAdapter(getActivity(), Mock.getCommics(ComicAdapter.class.getName()), recyclerView);
+        comicAdapter = new ComicAdapter(getActivity(), Mock.getCommics(nameComic), recyclerView);
+
+        recyclerView.setAdapter(comicAdapter);
     }
 }

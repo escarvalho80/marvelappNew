@@ -2,6 +2,7 @@ package br.com.frameworksystem.marvelapp.ui.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.ui.fragments.CharacterFragment;
+import br.com.frameworksystem.marvelapp.ui.fragments.ComicFragment;
 import br.com.frameworksystem.marvelapp.ui.fragments.EventFragments;
 
 public class MainActivity extends AppCompatActivity
@@ -73,23 +75,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = null;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction beginTransaction = fragmentManager.beginTransaction();
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_personagens) {
-            fragment = CharacterFragment.newInstancia();
+            beginTransaction.replace(R.id.content_main, CharacterFragment.newInstancia(false));
         } else if (id == R.id.nav_evento) {
-            fragment = EventFragments.newInstancia();
+            beginTransaction.replace(R.id.content_main, EventFragments.newInstancia());
         } else if (id == R.id.nav_comic){
-            fragment = EventFragments.newInstancia();
+            beginTransaction.replace(R.id.content_main, CharacterFragment.newInstancia(true));
         }
 
-        if (fragment != null){
-            beginTransaction.replace(R.id.content_main, fragment).commit();
-        }
+        beginTransaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

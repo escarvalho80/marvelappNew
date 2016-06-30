@@ -22,10 +22,13 @@ public class CharacterFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private CharacterAdapter characterAdapter;
+    private Boolean isComic = false;
 
-    public static Fragment newInstancia() {
+    public static Fragment newInstancia(Boolean isComic) {
 
-        return new CharacterFragment();
+        CharacterFragment characterFragment = new CharacterFragment();
+        characterFragment.isComic = isComic;
+        return characterFragment;
     }
 
     @Nullable
@@ -40,12 +43,12 @@ public class CharacterFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.fragment);
         recyclerView.setLayoutManager(layoutManager);
 
-        characterAdapter = new CharacterAdapter(getActivity(), Mock.getCharacters(), recyclerView);
+        characterAdapter = new CharacterAdapter(getActivity(), Mock.getCharacters(), recyclerView, isComic);
         recyclerView.setAdapter(characterAdapter);
     }
 

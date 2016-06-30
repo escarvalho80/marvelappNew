@@ -31,27 +31,21 @@ public class CharacterDetailActivity extends AppCompatActivity {
 
         //setando o layout
         setContentView(R.layout.activity_character_detail);
+        character = (Character) getIntent().getSerializableExtra("character");
 
         //inserindo toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        //mesmo comportamento da action bar, mas continua customizavel
-        setSupportActionBar(toolbar);
-
-        // seta de voltar para a home - recria a pilha - volta para a parent a activity
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //
-        character = (Character) getIntent().getSerializableExtra("character");
-
         //coloca titulo no topo da tela
         setTitle(character.getName());
+        //mesmo comportamento da action bar, mas continua customizavel
+        setSupportActionBar(toolbar);
+        // seta de voltar para a home - recria a pilha - volta para a parent a activity
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ImageView imageView = (ImageView) findViewById(R.id.character_imagem);
         Picasso.with(this).load(character.getThumbnailUrl()).centerCrop().resize(400, 400).into(imageView);
 
         TextView textView = (TextView) findViewById(R.id.character_descricao);
-
         textView.setText(character.getDescription());
 
     }
@@ -75,7 +69,6 @@ public class CharacterDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_share) {
             share();
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
