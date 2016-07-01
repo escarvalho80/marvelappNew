@@ -94,7 +94,6 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
                         fragmentTransaction.commit();
                     }
 
-
                 } else {
                     int posicao = recyclerView.getChildAdapterPosition(view);
 
