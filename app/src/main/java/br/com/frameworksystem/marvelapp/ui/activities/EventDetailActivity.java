@@ -11,7 +11,7 @@ import br.com.frameworksystem.marvelapp.model.Event;
 /**
  * Created by User on 28/06/2016.
  */
-public class EventDetailActivity extends AppCompatActivity {
+public class EventDetailActivity extends PrincipalActivity {
 
     private Event event;
 

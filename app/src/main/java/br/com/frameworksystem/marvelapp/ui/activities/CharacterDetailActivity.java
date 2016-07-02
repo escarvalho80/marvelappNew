@@ -20,7 +20,7 @@ import br.com.frameworksystem.marvelapp.model.Character;
 /**
  * Created by User on 28/06/2016.
  */
-public class CharacterDetailActivity extends AppCompatActivity {
+public class CharacterDetailActivity extends PrincipalActivity {
 
     private Character character;
 

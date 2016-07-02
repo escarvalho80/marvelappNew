@@ -18,7 +18,7 @@ import br.com.frameworksystem.marvelapp.ui.fragments.CharacterFragment;
 import br.com.frameworksystem.marvelapp.ui.fragments.ComicFragment;
 import br.com.frameworksystem.marvelapp.ui.fragments.EventFragments;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends PrincipalActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override

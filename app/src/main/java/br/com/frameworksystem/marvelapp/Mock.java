@@ -116,7 +116,7 @@ public class Mock {
             List<String> languageList2 = new ArrayList<>();
             languageList2.add("en-us");
             languageList2.add("pt_br");
-            comic2.setLanguages(languageList);
+            comic2.setLanguages(languageList2);
             comic2.setPrice("3.99");
             comic2.setDetailUrl("http://marvel.com/comics/issue/52564/spider-mandeadpool_2016_6?utm_campaign=apiRef&utm_source=277232a94db26746c653c879d30cec89");
             comic2.setThumbnailUrl("http://i.annihil.us/u/prod/marvel/i/mg/6/40/576d3ce92b113.jpg");

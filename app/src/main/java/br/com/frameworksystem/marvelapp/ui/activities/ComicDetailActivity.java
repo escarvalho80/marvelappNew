@@ -15,7 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +30,7 @@ import br.com.frameworksystem.marvelapp.model.Comic;
 /**
  * Created by User on 29/06/2016.
  */
-public class ComicDetailActivity extends AppCompatActivity {
+public class ComicDetailActivity extends PrincipalActivity {
 
     private Comic comic;
     private DownloadManager downloadManager;
@@ -42,7 +44,7 @@ public class ComicDetailActivity extends AppCompatActivity {
         comic = (Comic) getIntent().getSerializableExtra("comic");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setTitle(comic.getTitle());
+        setTitle(null);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,8 +52,22 @@ public class ComicDetailActivity extends AppCompatActivity {
         ImageView imageView = (ImageView) findViewById(R.id.comic_imagem);
         Picasso.with(this).load(comic.getThumbnailUrl()).centerCrop().resize(400, 400).into(imageView);
 
+        StringBuilder sb = new StringBuilder()
+            .append("Descrição: ")
+                .append(comic.getDescription())
+                .append("\n")
+                .append("Preço: ")
+                .append(comic.getPrice())
+                .append("\n")
+                .append("Idioma: ")
+                .append(comic.getLanguages())
+                .append("\n")
+                .append("URL: ")
+                .append(comic.getThumbnailUrl())
+        ;
+
         TextView textView = (TextView) findViewById(R.id.comic_descricao);
-        textView.setText(comic.getDescription());
+        textView.setText(sb);
 
     }
 
