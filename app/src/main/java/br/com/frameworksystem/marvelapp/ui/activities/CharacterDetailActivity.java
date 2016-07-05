@@ -1,12 +1,17 @@
 package br.com.frameworksystem.marvelapp.ui.activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.LogPrinter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -15,7 +20,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import br.com.frameworksystem.marvelapp.R;
+import br.com.frameworksystem.marvelapp.bd.SQLiteHelper;
 import br.com.frameworksystem.marvelapp.model.Character;
+import br.com.frameworksystem.marvelapp.util.Constante;
 
 /**
  * Created by User on 28/06/2016.
@@ -23,11 +30,14 @@ import br.com.frameworksystem.marvelapp.model.Character;
 public class CharacterDetailActivity extends PrincipalActivity {
 
     private Character character;
+    private SQLiteDatabase db;
 
     //no oncreate se define o layout de activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        db = SQLiteHelper.getDataBase(this);
 
         //setando o layout
         setContentView(R.layout.activity_character_detail);
@@ -47,6 +57,10 @@ public class CharacterDetailActivity extends PrincipalActivity {
 
         TextView textView = (TextView) findViewById(R.id.character_descricao);
         textView.setText(character.getDescription());
+
+        Cursor cursor = recuperaDado();
+
+        cursor.getCount();
 
     }
 
@@ -69,9 +83,49 @@ public class CharacterDetailActivity extends PrincipalActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_share) {
             share();
+        } else if (item.getItemId() == R.id.action_favorito) {
+            item.setIcon(R.drawable.ic_action_favoritado);
+            registerRemoveFavorito();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void registerRemoveFavorito() {
+        ContentValues dados = new ContentValues();
+
+        dados.put("name", character.getName());
+        dados.put("description", character.getDescription());
+        dados.put("favorite", 1);
+
+        if (!db.isOpen()) {
+            db = SQLiteHelper.getDataBase(this);
+        }
+
+        long retorno = db.insert(Constante.CHARATER_TABLE, null, dados);
+
+        if(retorno > 0){
+            Log.i("OK", "Inseriu no banco");
+        }
+
+    }
+
+    private Cursor recuperaDado(){
+
+        Cursor cursor ;
+        String where = "name = ? ";
+        String[] colunas = new String[] {"name", "description", "favorite"};
+        String argumentos[] = new String[] {character.getName()};
+        cursor = db.query(Constante.CHARATER_TABLE, colunas, where, argumentos, null, null, null);
+
+
+        if (cursor != null){
+            cursor.moveToFirst();
+        }
+
+        db.close();
+        return cursor;
+    }
+
 
     private void share() {
         //validando se o usuario clicou no botao share
