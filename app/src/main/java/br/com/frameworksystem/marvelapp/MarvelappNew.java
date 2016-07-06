@@ -13,7 +13,7 @@ public class MarvelappNew extends Application {
     public void onCreate() {
         super.onCreate();
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Roboto-Italic.ttf")
+                .setDefaultFontPath("fonts/Roboto-BlackItalic.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );

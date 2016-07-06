@@ -3,8 +3,10 @@ package br.com.frameworksystem.marvelapp.ui.activities;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.bd.SQLiteHelper;
 import br.com.frameworksystem.marvelapp.model.Character;
@@ -31,6 +36,7 @@ public class CharacterDetailActivity extends PrincipalActivity {
 
     private Character character;
     private SQLiteDatabase db;
+    private List<Character> characterList = new ArrayList<Character>();
 
     //no oncreate se define o layout de activity
     @Override
@@ -58,9 +64,9 @@ public class CharacterDetailActivity extends PrincipalActivity {
         TextView textView = (TextView) findViewById(R.id.character_descricao);
         textView.setText(character.getDescription());
 
-        Cursor cursor = recuperaDado();
+        List<Character> cursor = recuperaDado();
 
-        cursor.getCount();
+        cursor.size();
 
     }
 
@@ -86,44 +92,66 @@ public class CharacterDetailActivity extends PrincipalActivity {
         } else if (item.getItemId() == R.id.action_favorito) {
             item.setIcon(R.drawable.ic_action_favoritado);
             registerRemoveFavorito();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void registerRemoveFavorito() {
-        ContentValues dados = new ContentValues();
-
-        dados.put("name", character.getName());
-        dados.put("description", character.getDescription());
-        dados.put("favorite", 1);
 
         if (!db.isOpen()) {
             db = SQLiteHelper.getDataBase(this);
         }
 
-        long retorno = db.insert(Constante.CHARATER_TABLE, null, dados);
+        if (character.getFavorite() == 1){
+            db.delete(Constante.CHARATER_TABLE, "name", new String[]{character.getName()});
+        }else{
 
-        if(retorno > 0){
-            Log.i("OK", "Inseriu no banco");
+            ContentValues dados = new ContentValues();
+
+            dados.put("name", character.getName());
+            dados.put("description", character.getDescription());
+            dados.put("favorite", 1);
+
+            long retorno = db.insert(Constante.CHARATER_TABLE, null, dados);
+            if(retorno > 0){
+                Log.i("OK", "Inseriu no banco");
+            }
+
         }
 
     }
 
-    private Cursor recuperaDado(){
+    private List<Character> recuperaDado(){
 
         Cursor cursor ;
         String where = "name = ? ";
-        String[] colunas = new String[] {"name", "description", "favorite"};
+        String[] colunas = new String[] {"id", "name", "description", "favorite"};
         String argumentos[] = new String[] {character.getName()};
         cursor = db.query(Constante.CHARATER_TABLE, colunas, where, argumentos, null, null, null);
-
 
         if (cursor != null){
             cursor.moveToFirst();
         }
 
+        while (cursor.moveToNext()){
+            characterList.add(montaDadoCharater(cursor));
+        }
+
         db.close();
-        return cursor;
+        return characterList;
+    }
+
+    private Character montaDadoCharater(Cursor cursor){
+
+        Character character = new Character();
+
+        character.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("id"))));
+        character.setName(cursor.getString(cursor.getColumnIndex("name")));
+        character.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+        character.setFavorite((long) cursor.getInt(cursor.getColumnIndex("favorite")));
+
+        return character;
     }
 
 
