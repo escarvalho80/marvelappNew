@@ -15,5 +15,4 @@
         android:title="Favorito"
         app:showAsAction="ifRoom"/>
 
-
 </menu>

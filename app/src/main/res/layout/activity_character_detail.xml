@@ -7,6 +7,20 @@
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/player"
+        android:text="@string/play"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stop"
+        android:text="@string/stop"
+        />
+
     <ImageView
         android:id="@+id/character_imagem"
         android:layout_width="match_parent"

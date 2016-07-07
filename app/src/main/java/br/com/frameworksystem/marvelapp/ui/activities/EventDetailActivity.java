@@ -1,12 +1,19 @@
 package br.com.frameworksystem.marvelapp.ui.activities;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.model.Event;
+import br.com.frameworksystem.marvelapp.service.IMarvelappService;
+import br.com.frameworksystem.marvelapp.service.MarvelappService;
 
 /**
  * Created by User on 28/06/2016.

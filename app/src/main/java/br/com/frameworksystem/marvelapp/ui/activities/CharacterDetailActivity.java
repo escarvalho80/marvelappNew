@@ -1,11 +1,15 @@
 package br.com.frameworksystem.marvelapp.ui.activities;
 
+import android.content.ComponentName;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.StrictMode;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -16,6 +20,8 @@ import android.util.Log;
 import android.util.LogPrinter;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +33,8 @@ import java.util.List;
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.bd.SQLiteHelper;
 import br.com.frameworksystem.marvelapp.model.Character;
+import br.com.frameworksystem.marvelapp.service.MP3Player;
+import br.com.frameworksystem.marvelapp.service.MP3Service;
 import br.com.frameworksystem.marvelapp.util.Constante;
 
 /**
@@ -37,6 +45,38 @@ public class CharacterDetailActivity extends PrincipalActivity {
     private Character character;
     private SQLiteDatabase db;
     private List<Character> characterList = new ArrayList<Character>();
+
+    private MP3Player mp3Player;
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mp3Player = ((MP3Service.MP3Binder)service).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mp3Player = null;
+        }
+    };
+
+    private void connectService(){
+        Intent intent = new Intent(this, MP3Service.class);
+        this.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.unbindService(serviceConnection);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        connectService();
+    }
 
     //no oncreate se define o layout de activity
     @Override
@@ -64,9 +104,29 @@ public class CharacterDetailActivity extends PrincipalActivity {
         TextView textView = (TextView) findViewById(R.id.character_descricao);
         textView.setText(character.getDescription());
 
-        List<Character> cursor = recuperaDado();
+        List<Character> characterList = recuperaDado();
 
-        cursor.size();
+        Button play = (Button) findViewById(R.id.player);
+        play.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mp3Player.play("http://www.instantsfun.es/audio/acdc.mp3");
+                    }
+                }
+        );
+
+        Button stop = (Button) findViewById(R.id.stop);
+        stop.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mp3Player.stop();
+                    }
+                }
+
+        );
+
 
     }
 

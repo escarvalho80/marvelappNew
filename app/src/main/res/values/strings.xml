@@ -8,5 +8,7 @@
     <string name="personagens">Personagens</string>
     <string name="frameworkSystem">Framework System - Android</string>
     <string name="eventos">Eventos</string>
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
 
 </resources>
