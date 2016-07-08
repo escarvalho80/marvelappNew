@@ -14,13 +14,13 @@ public abstract class NetworkBroadcast extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()){
+        if (networkInfo != null && networkInfo.isConnected()) {
             onConnected(true);
-        }else{
+        } else {
             onConnected(false);
         }
 
     }
 
-    public abstract void onConnected(boolean isConnected) ;
+    public abstract void onConnected(boolean isConnected);
 }

@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.model.Event;
 import br.com.frameworksystem.marvelapp.service.IMarvelappService;
+import br.com.frameworksystem.marvelapp.service.LogService;
 import br.com.frameworksystem.marvelapp.service.MarvelappService;
 
 /**
@@ -27,6 +28,10 @@ public class EventDetailActivity extends PrincipalActivity {
         super.onCreate(bundle);
 
         setContentView(R.layout.item_event_detail);
+
+        Intent intent = new Intent(this, LogService.class);
+//        intent.putExtra()
+
 
         if (getIntent().hasExtra("event")) {
             event = (Event) getIntent().getSerializableExtra("event");
