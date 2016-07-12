@@ -18,6 +18,10 @@
             android:title="Comic"
             android:icon="@drawable/ic_menu_gallery"
             />
+        <item
+            android:id="@+id/nav_maps"
+            android:title="Mapa"
+            android:icon="@drawable/ic_maps"/>
     </group>
 
 </menu>

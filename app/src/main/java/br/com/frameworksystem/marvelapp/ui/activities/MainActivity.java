@@ -13,10 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.MapFragment;
+
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.ui.fragments.CharacterFragment;
 import br.com.frameworksystem.marvelapp.ui.fragments.ComicFragment;
 import br.com.frameworksystem.marvelapp.ui.fragments.EventFragments;
+import br.com.frameworksystem.marvelapp.ui.fragments.MapsFragment;
 
 public class MainActivity extends PrincipalActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,6 +90,8 @@ public class MainActivity extends PrincipalActivity
             beginTransaction.replace(R.id.content_main, EventFragments.newInstancia());
         } else if (id == R.id.nav_comic){
             beginTransaction.replace(R.id.content_main, CharacterFragment.newInstancia(true));
+        } else if (id == R.id.nav_maps){
+            beginTransaction.replace(R.id.content_main, MapsFragment.newInstancia());
         }
 
         beginTransaction.commit();
