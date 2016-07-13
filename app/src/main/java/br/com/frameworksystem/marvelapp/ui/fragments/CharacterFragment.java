@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import br.com.frameworksystem.marvelapp.Mock;
+import java.util.List;
+
 import br.com.frameworksystem.marvelapp.R;
+import br.com.frameworksystem.marvelapp.api.CharacterApi;
+import br.com.frameworksystem.marvelapp.model.Character;
 import br.com.frameworksystem.marvelapp.ui.adapter.CharacterAdapter;
 
 /**
@@ -48,8 +51,30 @@ public class CharacterFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.fragment);
         recyclerView.setLayoutManager(layoutManager);
 
-        characterAdapter = new CharacterAdapter(getActivity(), Mock.getCharacters(), recyclerView, isComic);
-        recyclerView.setAdapter(characterAdapter);
+        getCharacters();
+
+    }
+
+    private void getCharacters(){
+        final CharacterApi characterApi = new CharacterApi(getActivity());
+        characterApi.characters(new CharacterApi.OnCharactersListener(){
+
+            @Override
+            public void onCharacters(final List<Character> characters, int errorCode) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (characters != null){
+                            characterAdapter = new CharacterAdapter(getActivity(), characters, recyclerView, isComic);
+                            recyclerView.setAdapter(characterAdapter);
+                        }else{
+                            Toast.makeText(getActivity(), R.string.msg_erro_generic, Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+            }
+        });
     }
 
 }

@@ -16,6 +16,7 @@ import java.util.List;
 
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.model.Character;
+import br.com.frameworksystem.marvelapp.model.MarvelImage;
 import br.com.frameworksystem.marvelapp.ui.activities.CharacterDetailActivity;
 import br.com.frameworksystem.marvelapp.ui.activities.MainActivity;
 import br.com.frameworksystem.marvelapp.ui.fragments.ComicFragment;
@@ -54,7 +55,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
         holder.characterTitulo.setText(character.getName());
         holder.characterDescricao.setText(character.getDescription());
 
-        Picasso.with(context).load(character.getThumbnailUrl()).centerCrop().resize(400, 400).into(holder.characterImagem);
+        Picasso.with(context).load(character.thumbnail.getImageUrl(MarvelImage.Size.DETAIL)).centerCrop().resize(400, 400).into(holder.characterImagem);
 
     }
 

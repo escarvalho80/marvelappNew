@@ -1,18 +1,20 @@
 package br.com.frameworksystem.marvelapp.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by wgomes on 17/06/16.
  */
 
-public class Event implements Serializable{
+public class Event implements Serializable {
 
-    private String id;
-    private String title;
-    private String description;
-    private String url;
-    private String imgUrl;
+    public String id;
+    public String title;
+    public String description;
+    public String resourceUri;
+    public List<MarvelUrl> urls;
+    public MarvelImage thumbnail;
 
     public String getId() {
         return id;
@@ -38,19 +40,27 @@ public class Event implements Serializable{
         this.description = description;
     }
 
-    public String getUrl() {
-        return url;
+    public String getResourceUri() {
+        return resourceUri;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setResourceUri(String resourceUri) {
+        this.resourceUri = resourceUri;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public List<MarvelUrl> getUrls() {
+        return urls;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setUrls(List<MarvelUrl> urls) {
+        this.urls = urls;
+    }
+
+    public MarvelImage getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(MarvelImage thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

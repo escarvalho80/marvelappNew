@@ -1,6 +1,5 @@
 package br.com.frameworksystem.marvelapp.ui.fragments;
 
-import android.app.DownloadManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,9 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import br.com.frameworksystem.marvelapp.Mock;
+import java.util.List;
+
 import br.com.frameworksystem.marvelapp.R;
+import br.com.frameworksystem.marvelapp.api.ComicApi;
+import br.com.frameworksystem.marvelapp.model.Comic;
 import br.com.frameworksystem.marvelapp.ui.adapter.ComicAdapter;
 
 /**
@@ -47,8 +50,32 @@ public class ComicFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.fragment);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        comicAdapter = new ComicAdapter(getActivity(), Mock.getCommics(nameComic), recyclerView);
 
-        recyclerView.setAdapter(comicAdapter);
+
+        getComics();
+
+    }
+
+    private void getComics() {
+
+        final ComicApi comicApi = new ComicApi(getActivity());
+
+        comicApi.comics(new ComicApi.OnComicsListener() {
+            @Override
+            public void onComics(final List<Comic> comics, int errorCode) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (comics != null){
+                            comicAdapter = new ComicAdapter(getActivity(), comics, recyclerView);
+
+                            recyclerView.setAdapter(comicAdapter);
+                        }else {
+                            Toast.makeText(getActivity(), R.string.msg_erro_generic, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
     }
 }

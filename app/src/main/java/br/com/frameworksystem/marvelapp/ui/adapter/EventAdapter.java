@@ -15,6 +15,7 @@ import java.util.List;
 
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.model.Event;
+import br.com.frameworksystem.marvelapp.model.MarvelImage;
 import br.com.frameworksystem.marvelapp.ui.activities.EventDetailActivity;
 
 /**
@@ -48,7 +49,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         Event event = events.get(position);
         holder.eventTitle.setText(event.getTitle());
 
-        Picasso.with(context).load(event.getImgUrl()).centerCrop().resize(400,400).into(holder.eventImg);
+        Picasso.with(context).load(event.thumbnail.getImageUrl(MarvelImage.Size.DETAIL)).centerCrop().resize(400,400).into(holder.eventImg);
 
     }
 

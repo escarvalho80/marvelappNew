@@ -12,6 +12,7 @@ import android.webkit.WebView;
 
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.model.Event;
+import br.com.frameworksystem.marvelapp.model.MarvelImage;
 import br.com.frameworksystem.marvelapp.service.IMarvelappService;
 import br.com.frameworksystem.marvelapp.service.LogService;
 import br.com.frameworksystem.marvelapp.service.MarvelappService;
@@ -38,6 +39,6 @@ public class EventDetailActivity extends PrincipalActivity {
         }
 
         WebView webView = (WebView) findViewById(R.id.webview_event_detail);
-        webView.loadUrl(event.getUrl());
+        webView.loadUrl(event.resourceUri);
     }
 }

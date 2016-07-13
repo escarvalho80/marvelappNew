@@ -33,6 +33,7 @@ import java.util.List;
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.bd.SQLiteHelper;
 import br.com.frameworksystem.marvelapp.model.Character;
+import br.com.frameworksystem.marvelapp.model.MarvelImage;
 import br.com.frameworksystem.marvelapp.service.MP3Player;
 import br.com.frameworksystem.marvelapp.service.MP3Service;
 import br.com.frameworksystem.marvelapp.util.Constante;
@@ -99,7 +100,7 @@ public class CharacterDetailActivity extends PrincipalActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ImageView imageView = (ImageView) findViewById(R.id.character_imagem);
-        Picasso.with(this).load(character.getThumbnailUrl()).centerCrop().resize(400, 400).into(imageView);
+        Picasso.with(this).load(character.thumbnail.getImageUrl(MarvelImage.Size.DETAIL)).centerCrop().resize(400, 400).into(imageView);
 
         TextView textView = (TextView) findViewById(R.id.character_descricao);
         textView.setText(character.getDescription());

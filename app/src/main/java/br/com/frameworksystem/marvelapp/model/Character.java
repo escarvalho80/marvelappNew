@@ -1,22 +1,32 @@
 package br.com.frameworksystem.marvelapp.model;
 
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class Character implements Serializable {
 
+    @SerializedName("id")
     public String id;
     public String name;
     public String description;
     public String modified;
     public String resourceUri;
     public List<MarvelUrl> urls;
-    public String thumbnailUrl;
+    public MarvelImage thumbnail;
 
     private long favorite;
 
-//    public MarvelUrl thumbnail;
+    public long getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(long favorite) {
+        this.favorite = favorite;
+    }
+
+    public String thumbnailUrl;
 //    public MarvelResources<ComicResourceDto> comics;
 //    public MarvelResources<StoryResourceDto> stories;
 //    public MarvelResources<EventResourceDto> events;
@@ -32,7 +42,7 @@ public class Character implements Serializable {
                 ", modified='" + modified + '\'' +
                 ", resourceUri='" + resourceUri + '\'' +
                 ", urls=" + urls +
-                ", thumbnail=" + thumbnailUrl +
+                ", thumbnail=" + thumbnail +
                 '}';
     }
 
@@ -90,13 +100,5 @@ public class Character implements Serializable {
 
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
-    }
-
-    public long getFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(long favorite) {
-        this.favorite = favorite;
     }
 }

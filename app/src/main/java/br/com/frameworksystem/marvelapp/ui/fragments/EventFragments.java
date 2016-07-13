@@ -13,9 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import br.com.frameworksystem.marvelapp.Mock;
+import java.util.List;
+
 import br.com.frameworksystem.marvelapp.R;
+import br.com.frameworksystem.marvelapp.api.EventApi;
+import br.com.frameworksystem.marvelapp.model.Event;
 import br.com.frameworksystem.marvelapp.service.IMarvelappService;
 import br.com.frameworksystem.marvelapp.service.MarvelappService;
 import br.com.frameworksystem.marvelapp.ui.adapter.EventAdapter;
@@ -82,9 +86,35 @@ public class EventFragments extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.fragment);
         recyclerView.setLayoutManager(layoutManager);
 
-        // eventAdapter = new EventAdapter(getActivity(), Mock.getEvents(), recyclerView);
-        eventAdapter = new EventAdapter(getActivity(), Mock.getEvents(), recyclerView);
-        recyclerView.setAdapter(eventAdapter);
+        getEvents();
+
+
+
+    }
+
+    private void getEvents() {
+
+        final EventApi eventApi = new EventApi(getActivity());
+        eventApi.events(new EventApi.OnEventsListener() {
+            @Override
+            public void onEvents(final List<Event> events, int errorCode) {
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        if (events != null){
+                            // eventAdapter = new EventAdapter(getActivity(), Mock.getEvents(), recyclerView);
+                            eventAdapter = new EventAdapter(getActivity(), events, recyclerView);
+                            recyclerView.setAdapter(eventAdapter);
+                        }else {
+                            Toast.makeText(getActivity(), R.string.msg_erro_generic, Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+            }
+        });
 
     }
 
