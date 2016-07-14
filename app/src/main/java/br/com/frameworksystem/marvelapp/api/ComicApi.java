@@ -14,6 +14,7 @@ import br.com.frameworksystem.marvelapp.model.MarvelResponse;
 import br.com.frameworksystem.marvelapp.util.Constante;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -21,30 +22,40 @@ import okhttp3.Response;
  * Created by User on 12/07/2016.
  */
 public class ComicApi extends BaseApi {
-    public ComicApi(Context context) {
+
+    private String idComic;
+
+    public ComicApi(Context context, String idComic) {
         super(context);
+        this.idComic = idComic;
     }
 
-    public void comics(final OnComicsListener onComicsListener){
+    public void comics(final OnComicsListener onComicsListener) {
+
+        String aux = Constante.API_COMICS.replace("{characterId}", this.idComic);
+
+//        HttpUrl url = new HttpUrl.Builder()
+//                .host(aux).build();
+
         Request request = new Request.Builder()
-                .url(Constante.API_COMICS)
+                .url(aux)
                 .get().build();
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                if (onComicsListener != null){
-                    onComicsListener.onComics(null,500);
+                if (onComicsListener != null) {
+                    onComicsListener.onComics(null, 500);
                 }
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response == null){
+                if (response == null) {
                     return;
                 }
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Gson gson = new Gson();
                     MarvelResponse<MarvelCollection<Comic>> comics = gson.fromJson(
                             response.body().charStream(),
@@ -52,7 +63,7 @@ public class ComicApi extends BaseApi {
                             }.getType());
 
                     onComicsListener.onComics(comics.data.results, 0);
-                }else {
+                } else {
                     onComicsListener.onComics(null, response.code());
                 }
             }

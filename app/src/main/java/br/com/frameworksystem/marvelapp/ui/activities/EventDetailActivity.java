@@ -39,6 +39,6 @@ public class EventDetailActivity extends PrincipalActivity {
         }
 
         WebView webView = (WebView) findViewById(R.id.webview_event_detail);
-        webView.loadUrl(event.resourceUri);
+        webView.loadUrl(event.getUrls().get(0).url);
     }
 }

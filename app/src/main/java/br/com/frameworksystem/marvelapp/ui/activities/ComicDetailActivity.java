@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.model.Comic;
+import br.com.frameworksystem.marvelapp.model.MarvelImage;
 
 /**
  * Created by User on 29/06/2016.
@@ -50,7 +51,7 @@ public class ComicDetailActivity extends PrincipalActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ImageView imageView = (ImageView) findViewById(R.id.comic_imagem);
-        Picasso.with(this).load(comic.getThumbnailUrl()).centerCrop().resize(400, 400).into(imageView);
+        Picasso.with(this).load(comic.getThumbnail().getImageUrl(MarvelImage.Size.DETAIL)).centerCrop().resize(400, 400).into(imageView);
 
         StringBuilder sb = new StringBuilder()
             .append("Descrição: ")
@@ -63,7 +64,7 @@ public class ComicDetailActivity extends PrincipalActivity {
                 .append(comic.getLanguages())
                 .append("\n")
                 .append("URL: ")
-                .append(comic.getThumbnailUrl())
+                .append(comic.getThumbnail())
         ;
 
         TextView textView = (TextView) findViewById(R.id.comic_descricao);
@@ -102,7 +103,7 @@ public class ComicDetailActivity extends PrincipalActivity {
     }
 
     private void DownloadManager() {
-        Uri image_uri = Uri.parse(comic.getThumbnailUrl());
+        Uri image_uri = Uri.parse(comic.getDetailUrl());
 
         long downloadReference;
 

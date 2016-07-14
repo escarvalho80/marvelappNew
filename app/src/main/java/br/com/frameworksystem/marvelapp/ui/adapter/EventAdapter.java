@@ -49,7 +49,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         Event event = events.get(position);
         holder.eventTitle.setText(event.getTitle());
 
-        Picasso.with(context).load(event.thumbnail.getImageUrl(MarvelImage.Size.DETAIL)).centerCrop().resize(400,400).into(holder.eventImg);
+        Picasso.with(context).load(
+                event.thumbnail.getImageUrl(MarvelImage.Size.DETAIL))
+                .centerCrop().resize(400,400).into(holder.eventImg);
 
     }
 

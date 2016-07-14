@@ -22,6 +22,11 @@
             android:id="@+id/nav_maps"
             android:title="Mapa"
             android:icon="@drawable/ic_maps"/>
+
+        <item
+            android:id="@+id/nav_bluetooth"
+            android:title="Bluetooth"
+            android:icon="@drawable/ic_bluetooth"/>
     </group>
 
 </menu>

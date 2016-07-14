@@ -1,23 +1,19 @@
 package br.com.frameworksystem.marvelapp.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.MapFragment;
-
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.ui.fragments.CharacterFragment;
-import br.com.frameworksystem.marvelapp.ui.fragments.ComicFragment;
 import br.com.frameworksystem.marvelapp.ui.fragments.EventFragments;
 import br.com.frameworksystem.marvelapp.ui.fragments.MapsFragment;
 
@@ -92,6 +88,9 @@ public class MainActivity extends PrincipalActivity
             beginTransaction.replace(R.id.content_main, CharacterFragment.newInstancia(true));
         } else if (id == R.id.nav_maps){
             beginTransaction.replace(R.id.content_main, MapsFragment.newInstancia());
+        } else if (id == R.id.nav_bluetooth){
+            Intent intent = new Intent(this, BluetoothActivity.class);
+            startActivity(intent);
         }
 
         beginTransaction.commit();

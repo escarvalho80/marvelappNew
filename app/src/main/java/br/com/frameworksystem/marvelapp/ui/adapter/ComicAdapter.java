@@ -15,6 +15,7 @@ import java.util.List;
 
 import br.com.frameworksystem.marvelapp.R;
 import br.com.frameworksystem.marvelapp.model.Comic;
+import br.com.frameworksystem.marvelapp.model.MarvelImage;
 import br.com.frameworksystem.marvelapp.ui.activities.ComicDetailActivity;
 
 /**
@@ -46,7 +47,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Comic comic = comics.get(position);
         holder.comicName.setText(comic.getTitle());
-        Picasso.with(context).load(comic.getThumbnailUrl()).centerCrop().resize(400, 400).into(holder.comicImg);
+        Picasso.with(context).load(comic.getThumbnail().getImageUrl(MarvelImage.Size.DETAIL)).centerCrop().resize(400, 400).into(holder.comicImg);
     }
 
     @Override

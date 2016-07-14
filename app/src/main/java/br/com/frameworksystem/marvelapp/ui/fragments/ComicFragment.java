@@ -25,10 +25,12 @@ public class ComicFragment extends Fragment {
     private RecyclerView recyclerView;
     private ComicAdapter comicAdapter;
     private String nameComic;
+    private String idComic;
 
-    public static ComicFragment newInstancia(String nameComic) {
+    public static ComicFragment newInstancia(String nameComic, String idComic) {
         ComicFragment comicFragment = new ComicFragment();
         comicFragment.nameComic = nameComic;
+        comicFragment.idComic = idComic;
 
         return comicFragment;
     }
@@ -58,7 +60,7 @@ public class ComicFragment extends Fragment {
 
     private void getComics() {
 
-        final ComicApi comicApi = new ComicApi(getActivity());
+        final ComicApi comicApi = new ComicApi(getActivity(), this.idComic);
 
         comicApi.comics(new ComicApi.OnComicsListener() {
             @Override

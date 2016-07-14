@@ -31,6 +31,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
     private RecyclerView recyclerView;
     private Boolean isComic;
 
+
     public CharacterAdapter(Context context, List<Character> characters, RecyclerView recyclerView, boolean isComic) {
         this.context = context;
         this.characters = characters;
@@ -85,20 +86,21 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
             @Override
             public void onClick(View view) {
 
+                int posicao = recyclerView.getChildAdapterPosition(view);
+
+                Character character = characters.get(posicao);
+
                 if (isComic) {
 
                     if (context instanceof MainActivity){
                         FragmentTransaction fragmentTransaction = ((MainActivity) context).getSupportFragmentManager().beginTransaction();
 
-                        fragmentTransaction.replace(R.id.content_main, ComicFragment.newInstancia(characterTitulo.getText().toString()));
+                        fragmentTransaction.replace(R.id.content_main, ComicFragment.newInstancia(characterTitulo.getText().toString(), character.getId()));
 
                         fragmentTransaction.commit();
                     }
 
                 } else {
-                    int posicao = recyclerView.getChildAdapterPosition(view);
-
-                    Character character = characters.get(posicao);
 
                     Intent intent = new Intent(context, CharacterDetailActivity.class);
                     intent.putExtra("character", character);

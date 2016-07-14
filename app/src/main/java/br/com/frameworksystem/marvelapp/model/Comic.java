@@ -14,7 +14,7 @@ public class Comic implements Serializable {
     private List<String> languages;
     private String detailUrl;
     private String price;
-    private String thumbnailUrl;
+    private MarvelImage thumbnail;
 
     public String getTitle() {
         return title;
@@ -56,11 +56,11 @@ public class Comic implements Serializable {
         this.price = price;
     }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
+    public MarvelImage getThumbnail() {
+        return thumbnail;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
+    public void setThumbnail(MarvelImage thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
